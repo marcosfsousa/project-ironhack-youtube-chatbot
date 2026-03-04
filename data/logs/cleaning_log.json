@@ -1,0 +1,40 @@
+{
+  "cleaned": [
+    {
+      "video_id": "aircAruvnKk",
+      "total_segments": 286,
+      "empty_after_clean": 0,
+      "sponsor_flagged": 0,
+      "cleaned_at": "2026-03-04T16:51:53.206654Z"
+    },
+    {
+      "video_id": "HeQX2HjkcNo",
+      "total_segments": 317,
+      "empty_after_clean": 0,
+      "sponsor_flagged": 1,
+      "cleaned_at": "2026-03-04T17:06:59.266418Z"
+    },
+    {
+      "video_id": "MBRqu0YOH14",
+      "total_segments": 92,
+      "empty_after_clean": 0,
+      "sponsor_flagged": 0,
+      "cleaned_at": "2026-03-04T17:06:59.275918Z"
+    },
+    {
+      "video_id": "UyyjU8fzEYU",
+      "total_segments": 324,
+      "empty_after_clean": 0,
+      "sponsor_flagged": 0,
+      "cleaned_at": "2026-03-04T17:06:59.278420Z"
+    },
+    {
+      "video_id": "aircAruvnKk",
+      "total_segments": 286,
+      "empty_after_clean": 0,
+      "sponsor_flagged": 0,
+      "cleaned_at": "2026-03-04T17:06:59.283918Z"
+    }
+  ],
+  "skipped": []
+}
