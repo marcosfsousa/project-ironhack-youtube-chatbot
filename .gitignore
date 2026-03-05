@@ -134,6 +134,12 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# Pipeline runtime artifacts
+data/logs/
+
+# Keep data/videos out due to size
+data/videos/
+
 # Environments
 .env
 .envrc
@@ -143,6 +149,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+!.env.example
+
+# Technical Plan
+technical_plan_youtube_qa_bot.md
 
 # Spyder project settings
 .spyderproject

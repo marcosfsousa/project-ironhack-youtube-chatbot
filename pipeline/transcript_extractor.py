@@ -113,9 +113,13 @@ def deduplicate_urls(urls: list[str]) -> list[str]:
 
 
 def load_extraction_log() -> dict:
-    """Load existing extraction log or return empty structure."""
     if EXTRACT_LOG.exists():
-        return json.loads(EXTRACT_LOG.read_text())
+        log_data = json.loads(EXTRACT_LOG.read_text())
+        # Backfill missing keys for forward compatibility
+        log_data.setdefault("extracted", [])
+        log_data.setdefault("skipped", [])
+        log_data.setdefault("failed", [])
+        return log_data
     return {"extracted": [], "skipped": [], "failed": []}
 
 

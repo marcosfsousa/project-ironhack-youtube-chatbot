@@ -145,6 +145,7 @@ def chunk_transcript(
     video_id: str,
     window: float,
     dry_run: bool = False,
+    force: bool = False,
 ) -> dict | None:
     """
     Load transcript_clean.json, chunk it, write chunks.json.
@@ -156,6 +157,11 @@ def chunk_transcript(
     if not clean_path.exists():
         log.warning(f"  Clean transcript not found, skipping: {clean_path}")
         return None
+    
+    # Resume support — skip if already chunked (unless --force)
+    if chunks_path.exists() and not force:
+        log.info(f"  Already chunked, skipping: {video_id}  (use --force to re-chunk)")
+        return {"video_id": video_id, "skipped": True, "reason": "already_chunked"}
 
     clean = json.loads(clean_path.read_text(encoding="utf-8", errors="replace"))
     segments = clean["transcript"]
@@ -215,7 +221,7 @@ def save_chunk_log(log_data: dict) -> None:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def run(video_id: str | None, window: float, dry_run: bool) -> None:
+def run(video_id: str | None, window: float, dry_run: bool, force: bool) -> None:
 
     if dry_run:
         log.info("DRY RUN — no files will be written.")
@@ -238,7 +244,7 @@ def run(video_id: str | None, window: float, dry_run: bool) -> None:
     for vid_id in sorted(targets):
         log.info(f"Chunking: {vid_id}")
 
-        stats = chunk_transcript(vid_id, window=window, dry_run=dry_run)
+        stats = chunk_transcript(vid_id, window=window, dry_run=dry_run, force=force)
 
         if stats is None:
             chunk_log["skipped"].append({
@@ -249,6 +255,14 @@ def run(video_id: str | None, window: float, dry_run: bool) -> None:
             total_skip += 1
             continue
 
+        if stats.get("skipped"):
+            total_skip += 1
+            continue
+
+        # only reaches here if actually chunked
+        chunk_log["chunked"].append(stats)
+        total_ok += 1
+
         log.info(
             f"  ✓ {stats['total_chunks']} chunks | "
             f"avg duration: {stats['avg_duration_s']}s | "
@@ -256,16 +270,13 @@ def run(video_id: str | None, window: float, dry_run: bool) -> None:
             f"range: {stats['min_duration_s']}s – {stats['max_duration_s']}s"
         )
 
-        chunk_log["chunked"].append(stats)
-        total_ok += 1
-
     if not dry_run:
         save_chunk_log(chunk_log)
 
     log.info(
         f"\n── Chunking complete ────────────────────────\n"
         f"  ✓ Chunked : {total_ok}\n"
-        f"  ✗ Skipped : {total_skip}  (missing clean file)\n"
+        f"  ✗ Skipped : {total_skip}  (already chunked or missing clean file)\n"
         + ("  (dry run — nothing written)" if dry_run else
            f"  Log saved → {CHUNK_LOG}")
     )
@@ -294,6 +305,12 @@ if __name__ == "__main__":
         action="store_true",
         help="Print stats only — do not write any files",
     )
+    parser.add_argument(
+        "--force", 
+        action="store_true", 
+        help="Re-chunk already chunked videos"
+    )
+
     args = parser.parse_args()
 
-    run(video_id=args.video_id, window=args.window, dry_run=args.dry_run)
+    run(video_id=args.video_id, window=args.window, dry_run=args.dry_run, force=args.force)

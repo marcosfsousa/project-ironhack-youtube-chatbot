@@ -111,7 +111,7 @@ def is_sponsor_segment(text: str) -> bool:
 
 # ── Per-video cleaning ─────────────────────────────────────────────────────────
 
-def clean_transcript(video_id: str, dry_run: bool = False) -> dict | None:
+def clean_transcript(video_id: str, dry_run: bool = False, force: bool = False) -> dict | None:
     """
     Load transcript_raw.json, clean each segment, write transcript_clean.json.
     Returns a stats dict, or None if raw file not found.
@@ -122,6 +122,11 @@ def clean_transcript(video_id: str, dry_run: bool = False) -> dict | None:
     if not raw_path.exists():
         log.warning(f"  Raw transcript not found, skipping: {raw_path}")
         return None
+    
+    # Resume support — skip if already cleaned (unless --force)
+    if clean_path.exists() and not force:
+        log.info(f"  Already cleaned, skipping: {video_id}  (use --force to re-clean)")
+        return {"video_id": video_id, "skipped": True, "reason": "already_cleaned"}
 
     raw_text = raw_path.read_text(encoding="utf-8", errors="replace")
     raw_text = raw_text.replace("\u00a0", " ").replace("\ufffd", " ")
@@ -201,7 +206,7 @@ def save_clean_log(log_data: dict) -> None:
 
 # ── Main ───────────────────────────────────────────────────────────────────────
 
-def run(video_id: str | None, dry_run: bool) -> None:
+def run(video_id: str | None, dry_run: bool, force: bool) -> None:
 
     if dry_run:
         log.info("DRY RUN — no files will be written.")
@@ -224,7 +229,7 @@ def run(video_id: str | None, dry_run: bool) -> None:
     for vid_id in sorted(targets):
         log.info(f"Cleaning: {vid_id}")
 
-        stats = clean_transcript(vid_id, dry_run=dry_run)
+        stats = clean_transcript(vid_id, dry_run=dry_run, force=force)
 
         if stats is None:
             clean_log["skipped"].append({
@@ -235,14 +240,19 @@ def run(video_id: str | None, dry_run: bool) -> None:
             total_skip += 1
             continue
 
+        if stats.get("skipped"):
+            total_skip += 1
+            continue
+
+        # only reaches here if actually cleaned
+        clean_log["cleaned"].append(stats)
+        total_ok += 1
+
         log.info(
             f"  ✓ {stats['total_segments']} segments | "
             f"empty: {stats['empty_after_clean']} | "
             f"sponsor flags: {stats['sponsor_flagged']}"
         )
-
-        clean_log["cleaned"].append(stats)
-        total_ok += 1
 
     if not dry_run:
         save_clean_log(clean_log)
@@ -250,7 +260,7 @@ def run(video_id: str | None, dry_run: bool) -> None:
     log.info(
         f"\n── Cleaning complete ────────────────────────\n"
         f"  ✓ Cleaned : {total_ok}\n"
-        f"  ✗ Skipped : {total_skip}  (missing raw file)\n"
+        f"  ✗ Skipped : {total_skip}  (already cleaned or missing raw file)\n"
         + ("  (dry run — nothing written)" if dry_run else
            f"  Log saved → {CLEAN_LOG}")
     )
@@ -273,6 +283,12 @@ if __name__ == "__main__":
         action="store_true",
         help="Print stats only — do not write any files",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true", 
+        help="Re-clean already cleaned videos"
+    )
+
     args = parser.parse_args()
 
-    run(video_id=args.video_id, dry_run=args.dry_run)
+    run(video_id=args.video_id, dry_run=args.dry_run, force=args.force)

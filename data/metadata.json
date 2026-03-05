@@ -1,0 +1,231 @@
+{
+  "created_at": "2026-03-05T11:23:17.886334Z",
+  "updated_at": "2026-03-05T16:32:01.714006Z",
+  "video_count": 28,
+  "videos": {
+    "HeQX2HjkcNo": {
+      "title": "Math's Fundamental Flaw",
+      "channel": "Veritasium",
+      "topic": "Mathematics",
+      "url": "https://www.youtube.com/watch?v=HeQX2HjkcNo",
+      "indexed": true,
+      "video_id": "HeQX2HjkcNo"
+    },
+    "MBRqu0YOH14": {
+      "title": "Optimistic Nihilism",
+      "channel": "Kurzgesagt - In a Nutshell",
+      "topic": "Philosophy",
+      "url": "https://www.youtube.com/watch?v=MBRqu0YOH14",
+      "indexed": true,
+      "video_id": "MBRqu0YOH14"
+    },
+    "UyyjU8fzEYU": {
+      "title": "My Stroke of insight | Jill Bolte Taylor | TED",
+      "channel": "TED",
+      "topic": "Neuroscience",
+      "url": "https://www.youtube.com/watch?v=UyyjU8fzEYU",
+      "indexed": true,
+      "video_id": "UyyjU8fzEYU"
+    },
+    "aircAruvnKk": {
+      "title": "But what is a neural network? | Deep learning chapter 1",
+      "channel": "3Blue1Brown",
+      "topic": "Technology",
+      "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+      "indexed": true,
+      "video_id": "aircAruvnKk"
+    },
+    "094y1Z2wpJg": {
+      "title": "The Simplest Math Problem No One Can Solve - Collatz Conjecture",
+      "channel": "Veritasium",
+      "topic": "Mathematics",
+      "url": "https://www.youtube.com/watch?v=094y1Z2wpJg",
+      "indexed": true,
+      "video_id": "094y1Z2wpJg"
+    },
+    "7Pq-S557XQU": {
+      "title": "Humans Are Becoming Horses",
+      "channel": "CGP Grey",
+      "topic": "Philosophy",
+      "url": "https://www.youtube.com/watch?v=7Pq-S557XQU",
+      "indexed": true,
+      "video_id": "7Pq-S557XQU"
+    },
+    "B9RruLkAUm8": {
+      "title": "Your Gut Microbiome: The Most Important Organ You’ve Never Heard Of | Erika Ebbel Angle | TEDxFargo",
+      "channel": "TED",
+      "topic": "Biology",
+      "url": "https://www.youtube.com/watch?v=B9RruLkAUm8",
+      "indexed": true,
+      "video_id": "B9RruLkAUm8"
+    },
+    "E55uSCO5D2w": {
+      "title": "The Most Insane Weapon You Never Heard About",
+      "channel": "Kurzgesagt - In a Nutshell",
+      "topic": "History",
+      "url": "https://www.youtube.com/watch?v=E55uSCO5D2w",
+      "indexed": true,
+      "video_id": "E55uSCO5D2w"
+    },
+    "UBVV8pch1dM": {
+      "title": "The Science of Thinking",
+      "channel": "Veritasium",
+      "topic": "Cognitive Science",
+      "url": "https://www.youtube.com/watch?v=UBVV8pch1dM",
+      "indexed": true,
+      "video_id": "UBVV8pch1dM"
+    },
+    "VO6XEQIsCoM": {
+      "title": "The paradox of choice | Barry Schwartz | TED",
+      "channel": "TED",
+      "topic": "Psychology",
+      "url": "https://www.youtube.com/watch?v=VO6XEQIsCoM",
+      "indexed": true,
+      "video_id": "VO6XEQIsCoM"
+    },
+    "WUvTyaaNkzM": {
+      "title": "The essence of calculus",
+      "channel": "3Blue1Brown",
+      "topic": "Mathematics",
+      "url": "https://www.youtube.com/watch?v=WUvTyaaNkzM",
+      "indexed": true,
+      "video_id": "WUvTyaaNkzM"
+    },
+    "aeWyp2vXxqA": {
+      "title": "Black Hole Star - The Star That Shouldn't Exist",
+      "channel": "Kurzgesagt - In a Nutshell",
+      "topic": "Cosmology",
+      "url": "https://www.youtube.com/watch?v=aeWyp2vXxqA",
+      "indexed": true,
+      "video_id": "aeWyp2vXxqA"
+    },
+    "cebFWOlx848": {
+      "title": "The Illusion of Truth",
+      "channel": "Veritasium",
+      "topic": "Cognitive Science",
+      "url": "https://www.youtube.com/watch?v=cebFWOlx848",
+      "indexed": true,
+      "video_id": "cebFWOlx848"
+    },
+    "fG8SwAFQFuU": {
+      "title": "Do people understand the scale of the universe?",
+      "channel": "Veritasium",
+      "topic": "Cosmology",
+      "url": "https://www.youtube.com/watch?v=fG8SwAFQFuU",
+      "indexed": true,
+      "video_id": "fG8SwAFQFuU"
+    },
+    "gSKzgpt4HBU": {
+      "title": "The True Nature of Matter and Mass | Space Time | PBS Digital Studios",
+      "channel": "PBS Space Time",
+      "topic": "Physics",
+      "url": "https://www.youtube.com/watch?v=gSKzgpt4HBU",
+      "indexed": true,
+      "video_id": "gSKzgpt4HBU"
+    },
+    "iG9CE55wbtY": {
+      "title": "Do schools kill creativity? | Sir Ken Robinson | TED",
+      "channel": "TED",
+      "topic": "Education",
+      "url": "https://www.youtube.com/watch?v=iG9CE55wbtY",
+      "indexed": true,
+      "video_id": "iG9CE55wbtY"
+    },
+    "jAhjPd4uNFY": {
+      "title": "Genetic Engineering Will Change Everything Forever – CRISPR",
+      "channel": "Kurzgesagt - In a Nutshell",
+      "topic": "Biology",
+      "url": "https://www.youtube.com/watch?v=jAhjPd4uNFY",
+      "indexed": true,
+      "video_id": "jAhjPd4uNFY"
+    },
+    "pTn6Ewhb27k": {
+      "title": "Why No One Has Measured The Speed Of Light",
+      "channel": "Veritasium",
+      "topic": "Physics",
+      "url": "https://www.youtube.com/watch?v=pTn6Ewhb27k",
+      "indexed": true,
+      "video_id": "pTn6Ewhb27k"
+    },
+    "tlTKTTt47WE": {
+      "title": "Is Reality Real? The Simulation Argument",
+      "channel": "Kurzgesagt - In a Nutshell",
+      "topic": "Philosophy",
+      "url": "https://www.youtube.com/watch?v=tlTKTTt47WE",
+      "indexed": true,
+      "video_id": "tlTKTTt47WE"
+    },
+    "-ovM0daP6bw": {
+      "title": "AI vs Human Thinking: How Large Language Models Really Work",
+      "channel": "IBM Technology",
+      "topic": "Technology",
+      "url": "https://www.youtube.com/watch?v=-ovM0daP6bw",
+      "indexed": true,
+      "video_id": "-ovM0daP6bw"
+    },
+    "1Ou1MckZHTA": {
+      "title": "Neutron Stars: The Most Extreme Objects in the Universe",
+      "channel": "PBS Space Time",
+      "topic": "Cosmology",
+      "url": "https://www.youtube.com/watch?v=1Ou1MckZHTA",
+      "indexed": true,
+      "video_id": "1Ou1MckZHTA"
+    },
+    "1YFrISfN7jo": {
+      "title": "The Geometry of Causality",
+      "channel": "PBS Space Time",
+      "topic": "Physics",
+      "url": "https://www.youtube.com/watch?v=1YFrISfN7jo",
+      "indexed": true,
+      "video_id": "1YFrISfN7jo"
+    },
+    "7yLeDg_KuOA": {
+      "title": "The #1 antidote to aging | Daniel Lieberman, Morgan Levine & more",
+      "channel": "Big Think",
+      "topic": "Biology",
+      "url": "https://www.youtube.com/watch?v=7yLeDg_KuOA",
+      "indexed": true,
+      "video_id": "7yLeDg_KuOA"
+    },
+    "BD0r2Xfgh_E": {
+      "title": "Brian Cox - What Was There Before The Big Bang?",
+      "channel": "Science Time",
+      "topic": "Cosmology",
+      "url": "https://www.youtube.com/watch?v=BD0r2Xfgh_E",
+      "indexed": true,
+      "video_id": "BD0r2Xfgh_E"
+    },
+    "R_TnZJpCULI": {
+      "title": "You don’t need a 10-year plan. You need to experiment. | Anne-Laure Le Cunff",
+      "channel": "Big Think",
+      "topic": "Psychology",
+      "url": "https://www.youtube.com/watch?v=R_TnZJpCULI",
+      "indexed": true,
+      "video_id": "R_TnZJpCULI"
+    },
+    "XOiUZ3ycZwU": {
+      "title": "The Making of a Theory: Darwin, Wallace, and Natural Selection — HHMI BioInteractive Video",
+      "channel": "HHMI BioInteractive",
+      "topic": "Biology",
+      "url": "https://www.youtube.com/watch?v=XOiUZ3ycZwU",
+      "indexed": true,
+      "video_id": "XOiUZ3ycZwU"
+    },
+    "o9g49L-MmeE": {
+      "title": "Everything you need to know about semiconductors, in 16 mins | Chris Miller",
+      "channel": "Big Think",
+      "topic": "Physics",
+      "url": "https://www.youtube.com/watch?v=o9g49L-MmeE",
+      "indexed": true,
+      "video_id": "o9g49L-MmeE"
+    },
+    "t0qq9R__XiQ": {
+      "title": "Your brain wasn't built to hold this much information | Richard Cytowic",
+      "channel": "Big Think",
+      "topic": "Biology",
+      "url": "https://www.youtube.com/watch?v=t0qq9R__XiQ",
+      "indexed": true,
+      "video_id": "t0qq9R__XiQ"
+    }
+  }
+}
