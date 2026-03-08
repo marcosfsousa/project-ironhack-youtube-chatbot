@@ -1,0 +1,40 @@
+{
+  "experiment": "youtube-qa-bot-eval-20260308_154649",
+  "timestamp": "20260308_154649",
+  "judge_model": "gpt-4.1",
+  "total_cases": 1,
+  "scored": 1,
+  "adversarial_flagged": 0,
+  "results": [
+    {
+      "case_id": "rag_001",
+      "case_type": "rag_factual",
+      "topic": "Mathematics",
+      "video": "Math's Fundamental Flaw",
+      "question": "What is Gödel's incompleteness theorem and what does it say about mathematics?",
+      "reference": "Gödel's incompleteness theorem states that in any consistent formal mathematical system, there are true statements that cannot be proved within that system. This means mathematics can never be both complete and consistent — there will always be truths that lie beyond what can be formally proven. Gödel constructed a self-referential statement equivalent to 'this statement cannot be proved,' which, if provable, would make the system inconsistent.",
+      "answer": "Gödel's incompleteness theorem states that any consistent formal system of mathematics is either incomplete or inconsistent. In other words, it's impossible to have a complete and consistent system of mathematics. This means that there will always be true statements about mathematics that cannot be proven within the system. \n\nHilbert had hoped that even if a complete system was impossible, at least it would be possible to prove that the system is consistent, meaning it's free of contradictions. However, Gödel's second incompleteness theorem showed that this is also impossible. Any consistent formal system of math cannot prove its own consistency, so some contradiction could always crop up in the future, revealing that the system had been inconsistent all along.\n\nThis leaves mathematics with a fundamental flaw: it can never be both complete and consistent. The best that can be hoped for is a consistent yet incomplete system of math. This has significant implications for the foundations of mathematics and our understanding of what can be proven and what cannot.",
+      "scores": {
+        "correctness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "tone": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "grounding": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "conciseness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "mean": 0.0
+      },
+      "error": null,
+      "skipped": false
+    }
+  ]
+}

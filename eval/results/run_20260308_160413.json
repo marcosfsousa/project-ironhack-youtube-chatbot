@@ -1,0 +1,40 @@
+{
+  "experiment": "youtube-qa-bot-eval-20260308_160413",
+  "timestamp": "20260308_160413",
+  "judge_model": "gpt-4.1",
+  "total_cases": 1,
+  "scored": 1,
+  "adversarial_flagged": 0,
+  "results": [
+    {
+      "case_id": "rag_001",
+      "case_type": "rag_factual",
+      "topic": "Mathematics",
+      "video": "Math's Fundamental Flaw",
+      "question": "What is Gödel's incompleteness theorem and what does it say about mathematics?",
+      "reference": "Gödel's incompleteness theorem states that in any consistent formal mathematical system, there are true statements that cannot be proved within that system. This means mathematics can never be both complete and consistent — there will always be truths that lie beyond what can be formally proven. Gödel constructed a self-referential statement equivalent to 'this statement cannot be proved,' which, if provable, would make the system inconsistent.",
+      "answer": "Gödel's incompleteness theorem states that truth and provability are not the same thing. It means that there will always be true statements about mathematics that cannot be proven. In other words, any consistent formal system of mathematics is either incomplete or inconsistent. This theorem was a major blow to David Hilbert's formalist dream, which aimed to establish a complete and consistent system of mathematics.\n\nGödel's theorem shows that it's impossible to have a complete system of mathematics, where every true statement can be proven. Instead, the best we can hope for is a consistent yet incomplete system, where some true statements may not have a proof. Furthermore, Gödel's second incompleteness theorem states that a consistent formal system of mathematics cannot prove its own consistency, leaving open the possibility that a contradiction could arise in the future, revealing that the system was inconsistent all along.\n\nThis has significant implications for mathematics, as it means that there may be statements that are true but cannot be proven, and that mathematics is undecidable, meaning there is no algorithm that can always determine whether a statement follows from the axioms. This undecidability can even affect physical systems, such as those in quantum mechanics, where certain properties may be impossible to determine. \n\nSource links:\nhttps://www.youtube.com/watch?v=HeQX2HjkcNo&t=1282s\nhttps://www.youtube.com/watch?v=HeQX2HjkcNo&t=888s\nhttps://www.youtube.com/watch?v=HeQX2HjkcNo&t=820s\nhttps://www.youtube.com/watch?v=HeQX2HjkcNo&t=1598s\nhttps://www.youtube.com/watch?v=HeQX2HjkcNo&t=502s",
+      "scores": {
+        "correctness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "tone": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "grounding": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "conciseness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "mean": 0.0
+      },
+      "error": null,
+      "skipped": false
+    }
+  ]
+}

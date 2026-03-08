@@ -1,0 +1,40 @@
+{
+  "experiment": "youtube-qa-bot-eval-20260308_155710",
+  "timestamp": "20260308_155710",
+  "judge_model": "gpt-4.1",
+  "total_cases": 1,
+  "scored": 1,
+  "adversarial_flagged": 0,
+  "results": [
+    {
+      "case_id": "rag_001",
+      "case_type": "rag_factual",
+      "topic": "Mathematics",
+      "video": "Math's Fundamental Flaw",
+      "question": "What is Gödel's incompleteness theorem and what does it say about mathematics?",
+      "reference": "Gödel's incompleteness theorem states that in any consistent formal mathematical system, there are true statements that cannot be proved within that system. This means mathematics can never be both complete and consistent — there will always be truths that lie beyond what can be formally proven. Gödel constructed a self-referential statement equivalent to 'this statement cannot be proved,' which, if provable, would make the system inconsistent.",
+      "answer": "Gödel's incompleteness theorem states that any consistent formal system of mathematics is either incomplete or inconsistent. In other words, there will always be true statements about mathematics that cannot be proven within the system. This means that truth and provability are not the same thing. \n\nGödel's two incompleteness theorems taken together imply that the best you can hope for is a consistent yet incomplete system of math, but such a system cannot prove its own consistency. This leaves open the possibility that some contradiction could always crop up in the future, revealing that the system had been inconsistent all along.\n\nIn essence, Gödel's incompleteness theorem shows that mathematics is not a complete and perfect system, but rather one that is fundamentally limited. It challenges the idea that mathematics can be reduced to a set of axioms and rules that can be used to prove all true statements, and instead suggests that there will always be statements that are true but cannot be proven. \n\nThis has significant implications for our understanding of mathematics and its foundations, highlighting the inherent limitations and uncertainties of mathematical knowledge.",
+      "scores": {
+        "correctness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "tone": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "grounding": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "conciseness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "mean": 0.0
+      },
+      "error": null,
+      "skipped": false
+    }
+  ]
+}

@@ -5,17 +5,21 @@ Core RAG chain for the YouTube QA Bot.
 
 Wires together:
   - retriever.py       → Pinecone similarity search
-  - prompts.py         → system + QA prompt templates
+  - prompts.py         → system + QA prompt templates  (Day 5: extracted to own module)
   - Groq LLM           → Llama 3.1 70B (fast, free)
   - LangSmith tracing  → automatic via LANGCHAIN_* env vars
 
 Exposes two public functions:
   answer(question, namespace, top_k, ...)  → RAGResponse
-  stream_answer(question, ...)             → Iterator[str]  (for Streamlit)
+  stream_answer(question, ...)             → tuple[Iterator[str], list[RetrievedChunk]]  (for Streamlit)
 
 Usage (standalone smoke test):
   python rag_chain.py --question "How does a neural network learn?"
   python rag_chain.py --question "What is dark matter?" --threshold 0.35
+
+Changes from Day 4:
+  - All prompt strings + build_prompt() extracted to prompts.py
+  - Imports: SYSTEM_PROMPT, NO_CONTEXT_RESPONSE, REWRITE_SYSTEM, build_prompt
 """
 
 from __future__ import annotations
@@ -23,6 +27,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+import time
 from dataclasses import dataclass, field
 from typing import Iterator, Optional
 
@@ -40,6 +45,7 @@ from retriever import (
     retrieve_multi_namespace,
     PINECONE_NAMESPACE_CORPUS,
 )
+from prompts import SYSTEM_PROMPT, NO_CONTEXT_RESPONSE, REWRITE_SYSTEM, build_prompt
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -75,52 +81,40 @@ REWRITE_TEMPERATURE = 0.0   # Temp set to 0 to prevent any creative deviations
 REWRITE_MAX_TOKENS  = 128
 
 # ── Retrieval config ───────────────────────────────────────────────────────────
-DEFAULT_TOP_K          = 5
-DEFAULT_SCORE_THRESHOLD = 0.28   # Below this → "I don't know" guard / Reduced from 0.35 on Day 4
+DEFAULT_TOP_K           = 5
+DEFAULT_SCORE_THRESHOLD = 0.28   # Below this → "I don't know" guard
+                                    # Reduced from 0.35 on Day 4 (asymmetric embedding fix)
+
+# ── Groq retry config ──────────────────────────────────────────────────────────
+GROQ_MAX_RETRIES   = 3      # Maximum attempts before giving up
+GROQ_RETRY_BASE    = 2.0    # Base delay in seconds (doubles each retry)
+GROQ_RETRY_MAX     = 16.0   # Cap on retry delay
 
 
-# ── Prompt templates ───────────────────────────────────────────────────────────
-
-SYSTEM_PROMPT = """\
-You are a helpful assistant that answers questions about YouTube videos.
-
-You have access to transcript excerpts from a curated library of science and \
-education videos (Veritasium, Kurzgesagt, 3Blue1Brown, Big Think, and others).
-
-RULES:
-1. Answer ONLY using the provided transcript excerpts (the "context").
-2. If the context does not contain enough information to answer, say clearly:
-   "I don't have information about that in the available videos."
-   Do NOT make up or infer facts not present in the context.
-3. Always cite your sources. After each key claim, reference the video title
-   and timestamp in this format: [Video Title, MM:SS]
-4. If multiple chunks are relevant, synthesise them into a coherent answer.
-5. Keep answers concise but complete. Prefer 2–4 paragraphs max.
-6. If the user asks a follow-up question, use the conversation history
-   to understand what "it", "that", "they" etc. refer to.
-
-CONTEXT (transcript excerpts):
-{context}
-"""
-
-# Prompt used when no relevant chunks are found (score below threshold)
-NO_CONTEXT_RESPONSE = (
-    "I don't have information about that in the available videos. "
-    "The question may be outside the scope of the video library, or "
-    "you could try rephrasing your question."
-)
-
-
-def _build_prompt() -> ChatPromptTemplate:
+def _invoke_with_retry(chain, prompt_input: dict) -> str:
     """
-    Build the ChatPromptTemplate.
-    MessagesPlaceholder handles conversation history for multi-turn memory.
+    Invoke a LangChain chain with exponential backoff on Groq 429 errors.
+
+    Retries up to GROQ_MAX_RETRIES times. Respects Retry-After header when
+    present in the exception message. Falls back to base delay otherwise.
     """
-    return ChatPromptTemplate.from_messages([
-        ("system", SYSTEM_PROMPT),
-        MessagesPlaceholder(variable_name="history", optional=True),
-        ("human", "{question}"),
-    ])
+    delay = GROQ_RETRY_BASE
+    for attempt in range(1, GROQ_MAX_RETRIES + 1):
+        try:
+            return chain.invoke(prompt_input)
+        except Exception as e:
+            err = str(e)
+            is_rate_limit = "429" in err or "rate_limit" in err.lower() or "too many requests" in err.lower()
+            if is_rate_limit and attempt < GROQ_MAX_RETRIES:
+                # Honour Retry-After if Groq includes it in the error message
+                import re as _re
+                match = _re.search(r"retry.after[^\d]*(\d+)", err, _re.IGNORECASE)
+                wait = float(match.group(1)) if match else min(delay, GROQ_RETRY_MAX)
+                log.warning(f"Groq 429 — attempt {attempt}/{GROQ_MAX_RETRIES}, retrying in {wait:.1f}s")
+                time.sleep(wait)
+                delay = min(delay * 2, GROQ_RETRY_MAX)
+            else:
+                raise
 
 
 # ── Response dataclass ─────────────────────────────────────────────────────────
@@ -209,15 +203,6 @@ def _get_rewrite_llm() -> ChatGroq:
     return _rewrite_llm
 
 
-REWRITE_SYSTEM = (
-    "You are a query rewriter. Given a conversation history and a follow-up question, "
-    "rewrite the question as a single fully self-contained search query. "
-    "Resolve all pronouns and references to their explicit meaning. "
-    "If the question is already self-contained, return it unchanged. "
-    "Return ONLY the rewritten question. No explanation, no preamble."
-)
-
-
 def rewrite_query(question: str, history: Optional[list] = None) -> str:
     if not history:
         return question
@@ -300,6 +285,23 @@ def answer(
             score_threshold=score_threshold,
         )
 
+    # ── Step 2b: Rewrite fallback — retry with original if rewrite hurt retrieval ─
+    if not chunks and retrieval_query != question:
+        log.info(f"Rewritten query returned 0 chunks — retrying with original: {question!r}")
+        if multi_namespace:
+            chunks = retrieve_multi_namespace(
+                question,
+                top_k=top_k,
+                score_threshold=score_threshold,
+            )
+        else:
+            chunks = retrieve(
+                question,
+                namespace=namespace,
+                top_k=top_k,
+                score_threshold=score_threshold,
+            )
+
     # ── Step 3: Guard — no relevant context found ──────────────────────────────
     if not chunks:
         log.info(f"No chunks above threshold ({score_threshold}) — returning no-context response.")
@@ -329,7 +331,7 @@ def answer(
     context = format_context_for_llm(chunks)
 
     # ── Step 5: Build prompt and call LLM ─────────────────────────────────────
-    prompt   = _build_prompt()
+    prompt   = build_prompt()
     llm      = _get_llm()
     chain    = prompt | llm | StrOutputParser()
 
@@ -340,7 +342,7 @@ def answer(
     }
 
     log.info(f"Calling Groq ({GROQ_MODEL}) with {len(chunks)} context chunks...")
-    response_text = chain.invoke(prompt_input)
+    response_text = _invoke_with_retry(chain, prompt_input)
 
     return RAGResponse(
         answer=response_text,
@@ -386,23 +388,55 @@ def stream_answer(
             score_threshold=score_threshold
         )
 
+    # Rewrite fallback — retry with original if rewrite hurt retrieval
+    if not chunks and retrieval_query != question:
+        log.info(f"Rewritten query returned 0 chunks — retrying with original: {question!r}")
+        if multi_namespace:
+            chunks = retrieve_multi_namespace(
+                question, top_k=top_k, score_threshold=score_threshold
+            )
+        else:
+            chunks = retrieve(
+                question, namespace=namespace, top_k=top_k,
+                score_threshold=score_threshold
+            )
+
     if not chunks:
         def _no_context_stream():
             yield NO_CONTEXT_RESPONSE
         return _no_context_stream(), []
 
     context  = format_context_for_llm(chunks)
-    prompt   = _build_prompt()
+    prompt   = build_prompt()
     llm      = _get_llm()
     chain    = prompt | llm | StrOutputParser()
 
-    token_stream = chain.stream({
-        "context":  context,
-        "question": question,
-        "history":  history or [],
-    })
+    def _token_stream_with_retry() -> Iterator[str]:
+        """Yield tokens from Groq, retrying the stream on 429 errors."""
+        delay = GROQ_RETRY_BASE
+        for attempt in range(1, GROQ_MAX_RETRIES + 1):
+            try:
+                for token in chain.stream({
+                    "context":  context,
+                    "question": question,
+                    "history":  history or [],
+                }):
+                    yield token
+                return  # stream completed successfully
+            except Exception as e:
+                err = str(e)
+                is_rate_limit = "429" in err or "rate_limit" in err.lower() or "too many requests" in err.lower()
+                if is_rate_limit and attempt < GROQ_MAX_RETRIES:
+                    import re as _re
+                    match = _re.search(r"retry.after[^\d]*(\d+)", err, _re.IGNORECASE)
+                    wait = float(match.group(1)) if match else min(delay, GROQ_RETRY_MAX)
+                    log.warning(f"Groq 429 (stream) — attempt {attempt}/{GROQ_MAX_RETRIES}, retrying in {wait:.1f}s")
+                    time.sleep(wait)
+                    delay = min(delay * 2, GROQ_RETRY_MAX)
+                else:
+                    raise
 
-    return token_stream, chunks
+    return _token_stream_with_retry(), chunks
 
 
 # ── CLI smoke test ─────────────────────────────────────────────────────────────

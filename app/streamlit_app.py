@@ -8,9 +8,10 @@ Layout:
   Main     — chat interface with streaming output and source citations
 
 Session state keys:
-  agent       — YouTubeQAAgent singleton (persists across reruns)
-  messages    — list of {"role": "user"|"assistant", "content": str, "sources": list}
-  mode        — "corpus" | "live" (informational only; agent always queries both)
+  agent             — YouTubeQAAgent singleton (persists across reruns)
+  messages          — list of {"role": "user"|"assistant", "content": str, "sources": list}
+  mode              — "corpus" | "live" (informational only; agent always queries both)
+  last_embed_source — top-scoring RAG source chunk dict for video embed (None if not RAG)
 
 Run locally:
   streamlit run app/streamlit_app.py
@@ -86,9 +87,10 @@ st.markdown("""
 
 def _init_session() -> None:
     if "agent" not in st.session_state:
-        st.session_state.agent    = YouTubeQAAgent()
-        st.session_state.messages = []   # list of dicts: role / content / sources
-        st.session_state.mode     = "corpus"
+        st.session_state.agent             = YouTubeQAAgent()
+        st.session_state.messages          = []   # list of dicts: role / content / sources
+        st.session_state.mode              = "corpus"
+        st.session_state.last_embed_source = None  # top RAG chunk for video embed
 
 
 # ── Metadata loader (corpus video catalog) ────────────────────────────────────
@@ -145,6 +147,54 @@ def _render_sources(sources: list[dict]) -> None:
         )
 
 
+# ── Video embed ───────────────────────────────────────────────────────────────
+
+def _render_video_embed(sources: list[dict]) -> None:
+    """
+    Render a st.video() embed for the top-scoring source chunk.
+
+    Displayed outside the chat bubble as a separate block, inside a collapsed
+    expander so it doesn't dominate the layout by default.
+
+    Called from main() using st.session_state["last_embed_source"], so it
+    survives st.rerun() and persists until the next RAG answer or reset.
+    Never called from _render_history().
+
+    Source dict shape expected (streaming path from agent.last_sources):
+        title, video_id, start, end, chunk_text, channel
+    The blocking path (source_chunks_for_display) lacks raw video_id + start
+    integers and is never used for RAG in the Streamlit UI, so it is not handled.
+
+    Top chunk selection:
+        Pinecone returns results sorted by score descending, so sources[0] is
+        already the highest scorer. A defensive fallback to max(score) is used
+        in case order is ever disrupted (e.g. multi-namespace merge reordering).
+    """
+    if not sources:
+        return
+
+    # Defensive top-chunk selection: trust index 0 (Pinecone score-sorted) but
+    # fall back to explicit max if score field is present.
+    if all("score" in s for s in sources):
+        top = max(sources, key=lambda s: s.get("score", 0))
+    else:
+        top = sources[0]
+
+    video_id = re.sub(r"[^A-Za-z0-9_-]", "", str(top.get("video_id", "")))[:11]
+    start    = int(top.get("start", 0))
+    title    = top.get("title", video_id)[:50]
+
+    if not video_id:
+        return  # no valid video_id — skip silently
+
+    ts_label = f"{start // 60}:{start % 60:02d}"
+
+    with st.expander(f"▶ Watch: {title} @ {ts_label}", expanded=False):
+        st.video(
+            f"https://www.youtube.com/watch?v={video_id}",
+            start_time=start,
+        )
+
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 
 def _render_sidebar() -> None:
@@ -199,7 +249,8 @@ def _render_sidebar() -> None:
         st.markdown('<div class="sidebar-section">Session</div>', unsafe_allow_html=True)
         if st.button("🗑️ Clear conversation", use_container_width=True):
             st.session_state.agent.reset()
-            st.session_state.messages = []
+            st.session_state.messages          = []
+            st.session_state.last_embed_source = None
             st.rerun()
 
         st.markdown("---")
@@ -290,6 +341,12 @@ def _handle_user_input(user_input: str) -> None:
 
         _render_sources(sources)
 
+    # Store top source chunk for video embed — rendered in main() to survive rerun
+    if intent == "rag" and sources:
+        st.session_state["last_embed_source"] = sources[0]
+    elif intent != "rag":
+        st.session_state.pop("last_embed_source", None)
+
     # Persist assistant message
     st.session_state.messages.append({
         "role":    "assistant",
@@ -308,6 +365,10 @@ def main() -> None:
 
     _render_history()
     _render_starters()
+
+    # Video embed for last RAG answer — rendered here so it survives st.rerun()
+    if st.session_state.get("last_embed_source"):
+        _render_video_embed([st.session_state["last_embed_source"]])
 
     # Chat input pinned to bottom
     user_input = st.chat_input(

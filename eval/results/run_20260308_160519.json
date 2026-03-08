@@ -1,0 +1,40 @@
+{
+  "experiment": "youtube-qa-bot-eval-20260308_160519",
+  "timestamp": "20260308_160519",
+  "judge_model": "gpt-4.1",
+  "total_cases": 1,
+  "scored": 1,
+  "adversarial_flagged": 0,
+  "results": [
+    {
+      "case_id": "rag_001",
+      "case_type": "rag_factual",
+      "topic": "Mathematics",
+      "video": "Math's Fundamental Flaw",
+      "question": "What is Gödel's incompleteness theorem and what does it say about mathematics?",
+      "reference": "Gödel's incompleteness theorem states that in any consistent formal mathematical system, there are true statements that cannot be proved within that system. This means mathematics can never be both complete and consistent — there will always be truths that lie beyond what can be formally proven. Gödel constructed a self-referential statement equivalent to 'this statement cannot be proved,' which, if provable, would make the system inconsistent.",
+      "answer": "Gödel's incompleteness theorem states that any consistent formal system of mathematics is either incomplete or inconsistent. In other words, there will always be true statements about mathematics that cannot be proven within the system. This means that truth and provability are not the same thing. \n\nHilbert had hoped that even if a complete system was impossible, at least it could be proven to be consistent, but Gödel's second incompleteness theorem showed that any consistent formal system of math cannot prove its own consistency. This leaves us with a consistent yet incomplete system of math, where some contradiction could always crop up in the future, revealing that the system had been inconsistent all along.\n\nGödel's theorem has significant implications for mathematics, suggesting that there may be limits to what can be proven or known. It also raises questions about the nature of truth and provability in mathematics, and whether there can ever be a complete and consistent system of mathematics. Ultimately, Gödel's incompleteness theorem highlights the complexities and challenges of working with formal systems in mathematics. \n\nIn essence, Gödel's theorem means that mathematics is undecidable, and there is no algorithm that can always determine whether a statement is derivable from the axioms. This has far-reaching consequences, not just for mathematics, but also for fields like physics, where undecidability can appear in physical systems, such as in quantum mechanics.",
+      "scores": {
+        "correctness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "tone": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "grounding": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "conciseness": {
+          "score": 0,
+          "reason": "Judge error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************lKoA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+        },
+        "mean": 0.0
+      },
+      "error": null,
+      "skipped": false
+    }
+  ]
+}

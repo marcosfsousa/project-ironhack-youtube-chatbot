@@ -1,0 +1,40 @@
+{
+  "experiment": "youtube-qa-bot-eval-20260308_160914",
+  "timestamp": "20260308_160914",
+  "judge_model": "gpt-4.1",
+  "total_cases": 1,
+  "scored": 1,
+  "adversarial_flagged": 0,
+  "results": [
+    {
+      "case_id": "rag_001",
+      "case_type": "rag_factual",
+      "topic": "Mathematics",
+      "video": "Math's Fundamental Flaw",
+      "question": "What is Gödel's incompleteness theorem and what does it say about mathematics?",
+      "reference": "Gödel's incompleteness theorem states that in any consistent formal mathematical system, there are true statements that cannot be proved within that system. This means mathematics can never be both complete and consistent — there will always be truths that lie beyond what can be formally proven. Gödel constructed a self-referential statement equivalent to 'this statement cannot be proved,' which, if provable, would make the system inconsistent.",
+      "answer": "Gödel's incompleteness theorem states that any consistent formal system of mathematics is either incomplete or inconsistent. In other words, it's impossible to have a complete and consistent system of mathematics. This means that there will always be true statements about mathematics that cannot be proven within the system. \n\nHilbert had hoped that even if a complete system was impossible, at least it would be possible to prove that the system is consistent, meaning it's free of contradictions. However, Gödel's second incompleteness theorem showed that this is also impossible. A consistent formal system of math cannot prove its own consistency, so some contradiction could always crop up in the future, revealing that the system had been inconsistent all along.\n\nThis leaves mathematics with a fundamental flaw: the best you can hope for is a consistent yet incomplete system of math. This has significant implications for the foundations of mathematics and our understanding of what can be proven and what cannot. It also raises questions about the nature of truth and provability in mathematics, highlighting that they are not the same thing [Math's Fundamental Flaw, 21:22].",
+      "scores": {
+        "correctness": {
+          "score": 5,
+          "reason": "The answer accurately conveys all key facts: that in any consistent formal mathematical system there exist true statements that cannot be proved, and it also correctly summarizes Gödel's second incompleteness theorem, as well as the implications for mathematics."
+        },
+        "tone": {
+          "score": 5,
+          "reason": "The answer leads directly into the explanation of Gödel's incompleteness theorem without using any hedging openers or librarian framing."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The answer stays within what could reasonably be included in a science YouTube video about Gödel's incompleteness theorems, presenting explanations and implications appropriate for such a context without introducing external or fabricated details."
+        },
+        "conciseness": {
+          "score": 5,
+          "reason": "The answer is appropriately concise, remaining within three paragraphs with no unnecessary repetition or meta-commentary and all sentences contributing meaningfully to the explanation."
+        },
+        "mean": 5.0
+      },
+      "error": null,
+      "skipped": false
+    }
+  ]
+}
