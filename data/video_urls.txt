@@ -11,7 +11,6 @@ https://www.youtube.com/watch?v=094y1Z2wpJg
 https://www.youtube.com/watch?v=jAhjPd4uNFY
 https://www.youtube.com/watch?v=tlTKTTt47WE
 https://www.youtube.com/watch?v=aeWyp2vXxqA
-https://www.youtube.com/watch?v=E55uSCO5D2w
 
 # 3Blue1Brown — reliable human captions
 https://www.youtube.com/watch?v=aircAruvnKk
@@ -22,6 +21,16 @@ https://www.youtube.com/watch?v=UyyjU8fzEYU
 https://www.youtube.com/watch?v=B9RruLkAUm8
 https://www.youtube.com/watch?v=VO6XEQIsCoM
 https://www.youtube.com/watch?v=iG9CE55wbtY
+https://www.youtube.com/watch?v=M0yhHKWUa0g
+https://www.youtube.com/watch?v=iCvmsMzlF7o
+https://www.youtube.com/watch?v=fXIeFJCqsPs
+https://www.youtube.com/watch?v=QuR969uMICM
+https://www.youtube.com/watch?v=lyu7v7nWzfo
+https://www.youtube.com/watch?v=5MgBikgcWnY
+https://www.youtube.com/watch?v=fjbWr3ODbAo
+
+# Vox
+https://www.youtube.com/watch?v=TNQsmPf24go
 
 #CGP Grey
 https://www.youtube.com/watch?v=7Pq-S557XQU
@@ -30,6 +39,8 @@ https://www.youtube.com/watch?v=7Pq-S557XQU
 https://www.youtube.com/watch?v=gSKzgpt4HBU
 https://www.youtube.com/watch?v=1Ou1MckZHTA
 https://www.youtube.com/watch?v=1YFrISfN7jo
+https://www.youtube.com/watch?v=SN8nTQiWOYY
+https://www.youtube.com/watch?v=hmVOV7xvl58
 
 # Big Think
 https://www.youtube.com/watch?v=7yLeDg_KuOA
@@ -37,12 +48,20 @@ https://www.youtube.com/watch?v=t0qq9R__XiQ
 https://www.youtube.com/watch?v=o9g49L-MmeE
 https://www.youtube.com/watch?v=R_TnZJpCULI
 https://www.youtube.com/watch?v=rXfFACs24zU
+https://www.youtube.com/watch?v=Ua13CLOgZis
 
 # Science Time - Brian Cox
 https://www.youtube.com/watch?v=BD0r2Xfgh_E
 
 # IBM Technology
 https://www.youtube.com/watch?v=-ovM0daP6bw
+https://www.youtube.com/watch?v=5sLYAQS9sWQ
 
 # HHMI BioInteractive
 https://www.youtube.com/watch?v=XOiUZ3ycZwU
+
+#Vsauce
+https://www.youtube.com/watch?v=s86-Z-CbaHA
+
+#Quanta Magazine
+https://www.youtube.com/watch?v=zlm1aajH6gY

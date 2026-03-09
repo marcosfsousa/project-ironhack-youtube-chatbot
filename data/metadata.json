@@ -1,7 +1,7 @@
 {
   "created_at": "2026-03-05T11:23:17.886334Z",
-  "updated_at": "2026-03-07T15:38:26.463088Z",
-  "video_count": 29,
+  "updated_at": "2026-03-09T15:56:16.808138Z",
+  "video_count": 42,
   "videos": {
     "HeQX2HjkcNo": {
       "title": "Math's Fundamental Flaw",
@@ -58,14 +58,6 @@
       "url": "https://www.youtube.com/watch?v=B9RruLkAUm8",
       "indexed": true,
       "video_id": "B9RruLkAUm8"
-    },
-    "E55uSCO5D2w": {
-      "title": "The Most Insane Weapon You Never Heard About",
-      "channel": "Kurzgesagt - In a Nutshell",
-      "topic": "History",
-      "url": "https://www.youtube.com/watch?v=E55uSCO5D2w",
-      "indexed": true,
-      "video_id": "E55uSCO5D2w"
     },
     "UBVV8pch1dM": {
       "title": "The Science of Thinking",
@@ -234,6 +226,118 @@
       "url": "https://www.youtube.com/watch?v=rXfFACs24zU",
       "indexed": true,
       "video_id": "rXfFACs24zU"
+    },
+    "5MgBikgcWnY": {
+      "title": "The first 20 hours -- how to learn anything | Josh Kaufman | TEDxCSU",
+      "channel": "TED",
+      "topic": "Education",
+      "url": "https://www.youtube.com/watch?v=5MgBikgcWnY",
+      "indexed": true,
+      "video_id": "5MgBikgcWnY"
+    },
+    "5sLYAQS9sWQ": {
+      "title": "How Large Language Models Work",
+      "channel": "IBM Technology",
+      "topic": "Technology",
+      "url": "https://www.youtube.com/watch?v=5sLYAQS9sWQ",
+      "indexed": true,
+      "video_id": "5sLYAQS9sWQ"
+    },
+    "M0yhHKWUa0g": {
+      "title": "Don't eat the marshmallow! | Joachim de Posada",
+      "channel": "TED",
+      "topic": "Psychology",
+      "url": "https://www.youtube.com/watch?v=M0yhHKWUa0g",
+      "indexed": true,
+      "video_id": "M0yhHKWUa0g"
+    },
+    "QuR969uMICM": {
+      "title": "A beginner's guide to quantum computing | Shohini Ghose",
+      "channel": "TED",
+      "topic": "Technology",
+      "url": "https://www.youtube.com/watch?v=QuR969uMICM",
+      "indexed": true,
+      "video_id": "QuR969uMICM"
+    },
+    "SN8nTQiWOYY": {
+      "title": "What If Space And Time Are NOT Real?",
+      "channel": "PBS Space Time",
+      "topic": "Philosophy",
+      "url": "https://www.youtube.com/watch?v=SN8nTQiWOYY",
+      "indexed": true,
+      "video_id": "SN8nTQiWOYY"
+    },
+    "TNQsmPf24go": {
+      "title": "How Does the Internet Work? - Glad You Asked S1",
+      "channel": "Vox",
+      "topic": "Technology",
+      "url": "https://www.youtube.com/watch?v=TNQsmPf24go",
+      "indexed": true,
+      "video_id": "TNQsmPf24go"
+    },
+    "Ua13CLOgZis": {
+      "title": "Annaka Harris: You don’t exist the way you think you do",
+      "channel": "Big Think",
+      "topic": "Neuroscience",
+      "url": "https://www.youtube.com/watch?v=Ua13CLOgZis",
+      "indexed": true,
+      "video_id": "Ua13CLOgZis"
+    },
+    "fXIeFJCqsPs": {
+      "title": "Mihaly Csikszentmihalyi: Flow, the secret to happiness",
+      "channel": "TED",
+      "topic": "Psychology",
+      "url": "https://www.youtube.com/watch?v=fXIeFJCqsPs",
+      "indexed": true,
+      "video_id": "fXIeFJCqsPs"
+    },
+    "fjbWr3ODbAo": {
+      "title": "The illusion of consciousness | Dan Dennett",
+      "channel": "TED",
+      "topic": "Cognitive Science",
+      "url": "https://www.youtube.com/watch?v=fjbWr3ODbAo",
+      "indexed": true,
+      "video_id": "fjbWr3ODbAo"
+    },
+    "hmVOV7xvl58": {
+      "title": "Are We Living in an Ancestor Simulation? ft. Neil deGrasse Tyson | Space Time",
+      "channel": "PBS Space Time",
+      "topic": "Philosophy",
+      "url": "https://www.youtube.com/watch?v=hmVOV7xvl58",
+      "indexed": true,
+      "video_id": "hmVOV7xvl58"
+    },
+    "iCvmsMzlF7o": {
+      "title": "The Power of Vulnerability | Brené Brown | TED",
+      "channel": "TED",
+      "topic": "Psychology",
+      "url": "https://www.youtube.com/watch?v=iCvmsMzlF7o",
+      "indexed": true,
+      "video_id": "iCvmsMzlF7o"
+    },
+    "lyu7v7nWzfo": {
+      "title": "Your Brain Hallucinates Your Conscious Reality | Anil Seth | TED",
+      "channel": "TED",
+      "topic": "Neuroscience",
+      "url": "https://www.youtube.com/watch?v=lyu7v7nWzfo",
+      "indexed": true,
+      "video_id": "lyu7v7nWzfo"
+    },
+    "s86-Z-CbaHA": {
+      "title": "The Banach–Tarski Paradox",
+      "channel": "Vsauce",
+      "topic": "Physics",
+      "url": "https://www.youtube.com/watch?v=s86-Z-CbaHA",
+      "indexed": true,
+      "video_id": "s86-Z-CbaHA"
+    },
+    "zlm1aajH6gY": {
+      "title": "The Riemann Hypothesis, Explained",
+      "channel": "Quanta Magazine",
+      "topic": "Mathematics",
+      "url": "https://www.youtube.com/watch?v=zlm1aajH6gY",
+      "indexed": true,
+      "video_id": "zlm1aajH6gY"
     }
   }
 }

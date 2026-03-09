@@ -269,7 +269,7 @@ def _render_starters() -> None:
     st.markdown("#### What would you like to explore?")
     cols = st.columns(2)
     starters = [
-        "What is entropy and why does it increase?",
+        "Why has no one measured the speed of light?",
         "How does natural selection actually work?",
         "What happens at the edge of the observable universe?",
         "What videos do you have on mathematics?",
@@ -316,10 +316,16 @@ def _handle_user_input(user_input: str) -> None:
                         full_answer += token
                         for char in token:
                             placeholder.markdown(full_answer + "▌")
-                except Exception:
-                    # Fall back to blocking
-                    resp        = agent.chat(user_input)
-                    full_answer = resp.answer
+                # Handling Error 429 gracefully and avoiding streaming error messages in chat
+                except Exception as e:
+                    if "rate_limit_exceeded" in str(e) or "429" in str(e):
+                        full_answer = (
+                            "The service is currently at capacity. "
+                            "Please try again in a few minutes."
+                        )
+                    else:
+                        resp        = agent.chat(user_input)
+                        full_answer = resp.answer
                     placeholder.markdown(full_answer)
             sources = agent.last_sources
         else:

@@ -367,7 +367,9 @@ class YouTubeQAAgent:
                 yield token
             self._streamed_chunks = chunks
         except Exception as e:
-            log.error(f"Streaming failed, returning empty: {e}")
+            log.error(f"Streaming failed, falling back to blocking chat(): {e}")
+            resp = self.chat(question)
+            yield resp.answer
             return
 
         # Update memory with streamed answer
