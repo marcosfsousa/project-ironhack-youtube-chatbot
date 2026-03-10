@@ -2,7 +2,7 @@
 
 ## Overview
 
-The corpus consists of 29 curated science and education YouTube videos, totalling approximately 370 vectors in Pinecone. Videos were selected to maximize topic diversity, explanation density, and retrieval reliability.
+The corpus consists of 42 curated science and education YouTube videos, totalling approximately 674 vectors in Pinecone. Videos were selected to maximize topic diversity, explanation density, and retrieval reliability.
 
 ---
 
@@ -10,8 +10,8 @@ The corpus consists of 29 curated science and education YouTube videos, totallin
 
 | Attribute | Value |
 |---|---|
-| Total videos | 29 |
-| Total chunks (vectors) | ~370 |
+| Total videos | 42 |
+| Total chunks (vectors) | ~674 |
 | Chunk window | ~60 seconds |
 | Embedding dimensions | 384 |
 | Pinecone namespace | `corpus` |
@@ -25,12 +25,14 @@ Videos were sourced from channels known for scripted, explanation-dense content 
 | Channel | Videos | Notes |
 |---|---|---|
 | Veritasium | 6 | Physics, mathematics, cognitive science |
-| Kurzgesagt – In a Nutshell | 4 | Biology, cosmology, philosophy, history |
+| Kurzgesagt – In a Nutshell | 4 | Biology, cosmology, philosophy |
 | 3Blue1Brown | 3 | Mathematics, technology |
 | PBS Space Time | 3 | Physics, cosmology |
-| Big Think | 5 | Cosmology, psychology, biology, philosophy |
+| Big Think | 7 | Cosmology, psychology, biology, philosophy, neuroscience |
 | TED / TEDx | 4 | Psychology, education, neuroscience, biology |
-| Other (CGP Grey, IBM, HHMI, Science Time) | 4 | Philosophy, technology, biology, cosmology |
+| Vsauce | 2 | Philosophy, mathematics |
+| Quanta Magazine | 2 | Mathematics, physics |
+| Other (CGP Grey, IBM, HHMI, Science Time) | 11 | Philosophy, technology, biology, cosmology, cognitive science |
 
 **Selection criteria:**
 - One main concept per video (avoids retrieval ambiguity)
@@ -45,17 +47,17 @@ Videos were sourced from channels known for scripted, explanation-dense content 
 
 | Topic | Videos |
 |---|---|
-| Physics | 4 |
-| Biology | 5 |
 | Cosmology | 6 |
-| Mathematics | 3 |
-| Psychology | 3 |
-| Cognitive Science | 2 |
-| Neuroscience | 1 |
-| Philosophy | 2 |
-| Technology | 2 |
-| Education | 1 |
-| History | 1 |
+| Biology | 5 |
+| Physics | 5 |
+| Psychology | 5 |
+| Philosophy | 4 |
+| Technology | 4 |
+| Mathematics | 4 |
+| Education | 3 |
+| Neuroscience | 3 |
+| Cognitive Science | 3 |
+| **Total** | **42** |
 
 ---
 
@@ -157,7 +159,7 @@ Each video was verified through:
 1. **Manual question testing** — 3–5 questions per video run against the retriever to confirm relevant chunks are returned above the score threshold
 2. **Timestamp alignment** — source pills verified to deep-link to the correct moment in the video
 3. **Hallucination risk check** — videos heavily dependent on visuals (without verbal explanation) were excluded
-4. **Eval set coverage** — 20 of the 29 videos are covered by at least one case in `eval/eval_set.json`
+4. **Eval set coverage** — 20 of the 42 videos are covered by at least one case in `eval/eval_set.json`
 
 ---
 
@@ -171,4 +173,4 @@ A separate evaluation dataset of 30 cases was constructed alongside the corpus:
 | Multi-turn (pronoun resolution) | 5 |
 | Adversarial (prompt injection, out-of-scope) | 5 |
 
-Cases cover all 29 corpus videos. Adversarial cases are excluded from automated scoring and reviewed manually in `eval/manual_review.json`.
+Cases cover a representative sample of corpus videos. Adversarial cases are excluded from automated scoring and reviewed manually in `eval/manual_review.json`.

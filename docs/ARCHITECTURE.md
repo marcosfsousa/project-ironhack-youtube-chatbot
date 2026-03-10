@@ -57,8 +57,8 @@ The web interface manages session state, renders streaming responses, and handle
 - **Intent detection** runs before the agent via `_classify_intent_fast()` to decide whether to use the streaming (RAG) or blocking (metadata/ingest) path
 - **Streaming** renders tokens incrementally using a placeholder with a cursor character (`▌`)
 - **Source pills** render as clickable HTML links with deep-linked YouTube timestamps
-- **Video embed** persists in `st.session_state` to survive `st.rerun()` between responses
-- **Sidebar** loads the corpus catalog dynamically from `metadata.json` with topic filtering
+- **Video embed** persists in `st.session_state` to survive `st.rerun()` between responses, rendered in a 2-column layout (chat 60%, embed 40%) when a RAG source exists
+- **Sidebar** displays the corpus catalog grouped by topic in collapsible `st.expander` sections, each showing title, channel, and duration
 
 ### LangGraph Agent (`agent/agent.py`)
 
@@ -95,7 +95,7 @@ Two tools registered with the agent:
 
 **RAGRetrieverTool** — answers factual questions by calling the RAG chain. Always tried first.
 
-**VideoMetadataTool** — answers catalog queries ("what videos do you have on physics?") by searching `metadata.json`. Uses a `_is_browse_all()` guard to prevent topic-specific queries from triggering a full catalog dump. Vague references ("that topic") are resolved using a lightweight `llama-3.1-8b-instant` call before searching.
+**VideoMetadataTool** — answers catalog queries ("what videos do you have on physics?") by searching `metadata.json`. Uses a three-pass matching strategy: exact match on topic/title/channel first, then a loose word match restricted to the topic field only to prevent cross-topic contamination. Returns a `METADATA_LIST:<json>` signal rather than a formatted string — the Streamlit app detects this prefix and renders the list directly, bypassing LLM reformatting entirely. All metadata queries are first resolved to a clean search keyword via `llama-3.1-8b-instant` before hitting the tool, normalising full sentences ("what videos do you have on mathematics?") to single terms ("mathematics").
 
 ### Prompts (`agent/prompts.py`)
 
@@ -120,6 +120,8 @@ End-to-end pipeline triggered when the user pastes a YouTube URL:
 Note: `yt-dlp` is used only for metadata resolution in the live path. The corpus pipeline does not use `yt-dlp` — titles and channels are manually curated in `metadata.json`.
 
 Includes cross-namespace duplicate detection — checks both `corpus` and `live` before indexing to avoid re-indexing videos already in the corpus.
+
+**Known limitation:** live URL ingestion works in local development but fails on Streamlit Community Cloud — YouTube blocks transcript requests from AWS IP ranges. Resolving this in production requires a proxy layer (e.g. residential proxy service) or an alternative transcription API (e.g. AssemblyAI). This is a known infrastructure constraint, not a code issue.
 
 ---
 
@@ -158,6 +160,8 @@ At query time, the path is reversed: query → embedding → Pinecone → top-k 
 **Score threshold gate (0.28)** — lowered from an initial 0.35 on Day 5 after discovering that asymmetric embedding (title-prepended chunks indexed vs plain query text at retrieval time) depresses cosine scores. Single-word queries score 0.27–0.28, fuller questions score ~0.31 — both below the original gate. On-topic queries still clear 0.28 reliably; off-topic queries fall below it. Future upgrade path: swap `all-MiniLM-L6-v2` for a natively asymmetric model such as `msmarco-distilbert` or Cohere `embed-english-v3.0` (supports separate `input_type` for query vs document) — requires full re-indexing of all vectors.
 
 **Title-prepended embeddings** — indexing chunks as `"{title} | {chunk_text}"` bakes topical context into vectors, improving retrieval precision for topic-adjacent queries.
+
+**METADATA_LIST signal pattern** — `VideoMetadataTool` returns a structured `METADATA_LIST:<json>` prefix rather than a formatted string. The Streamlit app detects this prefix and renders the list directly, bypassing LLM reformatting which was producing inconsistent output. Plain-text fallbacks (no results found) are still passed through `st.markdown` as-is.
 
 **Custom `ConversationMemory`** — avoids `langchain-community` dependency, which had unstable versioning during development.
 

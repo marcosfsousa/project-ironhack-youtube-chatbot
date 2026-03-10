@@ -1,6 +1,6 @@
 # YouTube QA Bot
 
-A RAG-based chatbot that answers questions grounded in YouTube science video transcripts. Ask anything about the pre-built corpus of 29 curated videos, or paste any YouTube URL to ingest and query it on the fly.
+A RAG-based chatbot that answers questions grounded in YouTube science video transcripts. Ask anything about the pre-built corpus of 42 curated videos, or paste any YouTube URL to ingest and query it on the fly.
 
 Built as the final project for the [Ironhack](https://www.ironhack.com) Data Analytics & AI Bootcamp.
 
@@ -16,7 +16,7 @@ Built as the final project for the [Ironhack](https://www.ironhack.com) Data Ana
 
 ## What it does
 
-- Answers factual questions from a corpus of 29 science explainer videos (Veritasium, Kurzgesagt, 3Blue1Brown, PBS Space Time, Big Think, and more)
+- Answers factual questions from a corpus of 42 science explainer videos (Veritasium, Kurzgesagt, 3Blue1Brown, PBS Space Time, Big Think, and more)
 - Pastes a YouTube URL → ingests it in real time → answers questions about it
 - Streams answers token by token with clickable source timestamp pills
 - Maintains 5-turn conversation memory with query rewriting for follow-up questions
@@ -157,10 +157,11 @@ python tests/run_all_tests.py
 
 - Retrieval quality depends on transcript verbosity — visually-heavy videos without verbal explanation retrieve poorly
 - Multi-turn pronoun resolution occasionally drifts on short follow-ups
-- Live ingestion requires a video with available captions (auto-generated accepted)
+- Live URL ingestion works locally but is disabled on Streamlit Community Cloud — YouTube blocks transcript requests from AWS IP ranges. Requires a video with available captions (auto-generated accepted).
 
 ## Next steps
 
 - Swap `all-MiniLM-L6-v2` for a natively asymmetric model (e.g. Cohere `embed-english-v3.0`) to improve retrieval scores without threshold tuning
 - Add a reranker pass (cross-encoder) after initial retrieval for better precision
 - Whisper integration for videos without captions
+- Proxy layer or alternative transcription API (e.g. AssemblyAI) to enable live URL ingestion on Streamlit Community Cloud
