@@ -49,6 +49,7 @@ from youtube_transcript_api import (
     TranscriptsDisabled,
     VideoUnavailable,
 )
+from youtube_transcript_api.proxies import GenericProxyConfig
 
 load_dotenv()
 
@@ -77,6 +78,29 @@ TOPIC_CHOICES = [
     "Neuroscience", "Psychology", "Cognitive Science", "Philosophy",
     "Technology", "History", "Education", "Other",
 ]
+
+# ── Proxy config ───────────────────────────────────────────────────────────────
+
+def _get_proxy_config() -> tuple[str | None, GenericProxyConfig | None]:
+    """
+    Returns (proxy_url, proxy_config) if IPROYAL_PROXY_URL is set, else (None, None).
+
+    - proxy_url is used by yt-dlp via --proxy flag
+    - proxy_config is used by YouTubeTranscriptApi via proxy_config=
+
+    Expected format: http://username:password@geo.iproyal.com:12321
+    Set via .env locally or Streamlit secrets on cloud.
+    """
+    proxy_url = os.environ.get("IPROYAL_PROXY_URL")
+    if proxy_url:
+        log.info("  Proxy configured — routing YouTube requests via residential proxy.")
+        proxy_config = GenericProxyConfig(
+            http_url=proxy_url,
+            https_url=proxy_url,
+        )
+        return proxy_url, proxy_config
+    return None, None
+
 
 # ── Result dataclass ───────────────────────────────────────────────────────────
 
@@ -133,8 +157,12 @@ def _fetch_metadata_yt_dlp(url: str) -> dict | None:
     Returns None if yt-dlp is not installed or the call fails.
     """
     try:
+        cmd = ["yt-dlp", "--dump-json", "--no-playlist", url]
+        proxy_url, _ = _get_proxy_config()
+        if proxy_url:
+            cmd += ["--proxy", proxy_url]
         result = subprocess.run(
-            ["yt-dlp", "--dump-json", "--no-playlist", url],
+            cmd,
             capture_output=True,
             text=True,
             timeout=30,
@@ -234,7 +262,8 @@ def _extract_transcript(video_id: str) -> tuple[list[dict], str, bool]:
     Raises NoTranscriptFound / TranscriptsDisabled / VideoUnavailable on failure.
     """
 
-    ytt = YouTubeTranscriptApi()
+    _, proxy_config = _get_proxy_config()
+    ytt = YouTubeTranscriptApi(proxy_config=proxy_config) if proxy_config else YouTubeTranscriptApi()
     transcript_list = ytt.list(video_id)
 
     # Preference: human English → any human → auto English → any auto
