@@ -121,7 +121,7 @@ Note: `yt-dlp` is used only for metadata resolution in the live path. The corpus
 
 Includes cross-namespace duplicate detection — checks both `corpus` and `live` before indexing to avoid re-indexing videos already in the corpus.
 
-**Known limitation:** live URL ingestion works in local development but fails on Streamlit Community Cloud — YouTube blocks transcript requests from AWS IP ranges. Resolving this in production requires a proxy layer (e.g. residential proxy service) or an alternative transcription API (e.g. AssemblyAI). This is a known infrastructure constraint, not a code issue.
+**Deployment note:** on Streamlit Community Cloud, YouTube blocks transcript requests from AWS IP ranges. This is resolved via an IPRoyal residential proxy: `youtube-transcript-api` is initialised with `GenericProxyConfig(http_url, https_url)` and `yt-dlp` receives a `--proxy` flag. The `_get_proxy_config()` helper reads `IPROYAL_PROXY_URL` from the environment and returns `None` when absent, so local development works unchanged.
 
 ---
 

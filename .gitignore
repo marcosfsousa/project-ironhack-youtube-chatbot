@@ -156,7 +156,8 @@ venv.bak/
 !.env.example
 
 # Technical Plan
-technical_plan_youtube_qa_bot.md
+docs/technical_plan_youtube_qa_bot.md
+docs/youtube_transcript_api_challenges.md
 
 # Spyder project settings
 .spyderproject
