@@ -2,7 +2,7 @@
 
 A RAG-based chatbot that answers questions grounded in YouTube science video transcripts. Ask anything about the pre-built corpus of 42 curated videos, or paste any YouTube URL to ingest and query it on the fly.
 
-Built as the final project for the [Ironhack](https://www.ironhack.com) Data Analytics & AI Bootcamp.
+Built as the final project for the [Ironhack](https://www.ironhack.com) AI Engineering course.
 
 **Live demo:** [scienceq.streamlit.app](https://scienceq.streamlit.app)
 
